@@ -28,11 +28,9 @@ public:
 		float r, g, b;
 
 		/*
-
 		float	h = hue / 360,
 				s = saturation / 100,
 				v = value / 100;
-
 		*/
 
 		float	h = hue,

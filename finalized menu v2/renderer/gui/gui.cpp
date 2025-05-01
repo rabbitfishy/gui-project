@@ -1427,14 +1427,11 @@ void color_picker::draw()
 
 		// color selector dot outline.
 		render->outlined_rect(inner_area.x + 5 + s, inner_area.y + 10 + v, 4, 4, color(10, 10, 10));
-		
+
 		// hue bar.
 		for (int i = 0; i < 150; i++)
-		{
-			this->hue = i / 150;
-			render->filled_rect(inner_area.x + inner_area.w + 10, inner_area.y + 10 + i, 10, 1, color::hsv_to_rgb(this->hue, 1.f, 1.f));
-		}
-
+			render->filled_rect(inner_area.x + inner_area.w + 10, inner_area.y + 10 + i, 10, 1, color::hsv_to_rgb(i / 150.f, 1.f, 1.f));
+		
 		// hue bar outline.
 		render->outlined_rect(inner_area.x + inner_area.w + 10, inner_area.y + 10, 11, inner_area.h, color(35, 35, 35));
 
@@ -1542,7 +1539,7 @@ void color_picker::think()
 		if (this->color_drag || this->hue_drag || this->alpha_drag)
 		{
 			// set updated colors.
-			this->value.hsv(this->hue, this->saturation, this->color_value, this->alpha);
+			this->value		= color::hsv_to_rgb(this->hue, this->saturation, this->color_value);
 			this->value.a	= (this->alpha * 255.f);
 		}
 	}
@@ -1569,7 +1566,7 @@ void color_picker::update()
 			float value			= 1.f - (x / float(picker_size.w));
 
 			// write back to array.
-			this->gradient[x * picker_size.w + y].hsv(this->hue, saturation, value, this->alpha);
+			this->gradient[x * picker_size.w + y] = color::hsv_to_rgb(this->hue, saturation, value);
 		}
 	}
 }

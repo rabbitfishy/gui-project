@@ -1544,7 +1544,7 @@ void color_picker::think()
 		if (this->color_drag || this->hue_drag || this->alpha_drag)
 		{
 			// set updated colors.
-			this->value		= color::hsv_to_rgb(this->hue, this->saturation, this->color_value);
+			this->value.hsv(this->hue, this->saturation, this->color_value, this->alpha);
 			this->value.a	= (this->alpha * 255.f);
 		}
 	}
@@ -1571,7 +1571,7 @@ void color_picker::update()
 			float value			= 1.f - (x / float(picker_size.w));
 
 			// write back to array.
-			this->gradient[x * picker_size.w + y] = color::hsv_to_rgb(this->hue, saturation, value);
+			this->gradient[x * picker_size.w + y].hsv(this->hue, saturation, value, this->alpha);
 		}
 	}
 }

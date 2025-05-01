@@ -12,7 +12,7 @@ public:
     color rgba() { return color(this->r, this->g, this->b, this->a); }
 
     // set color function.
-    color set(int r, int g, int b, int a = 255) { return color(r, g, b, a); }
+    static color set(int r, int g, int b, int a = 255) { return color(r, g, b, a); }
 
 	/*
 	* information credit: https://programmingdesignsystems.com/color/color-models-and-color-spaces/index.html#:~:text=HSV%20is%20a%20cylindrical%20color,on%20the%20RGB%20color%20circle.
@@ -60,6 +60,11 @@ public:
 		result.a = alpha;
 
 		return result;
+	}
+
+	static color hsv_to_rgb(float h, float s, float v)
+	{
+		return hsv(h, s, v, 255.f);
 	}
 
     int r, g, b, a;

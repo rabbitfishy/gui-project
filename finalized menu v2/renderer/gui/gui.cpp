@@ -1427,17 +1427,12 @@ void color_picker::draw()
 
 		// color selector dot outline.
 		render->outlined_rect(inner_area.x + 5 + s, inner_area.y + 10 + v, 4, 4, color(10, 10, 10));
-
-		// update alpha opacity.
-		color alpha_color	= this->value;
-		this->alpha			= alpha_color.a / 255.f;
 		
 		// hue bar.
 		for (int i = 0; i < 150; i++)
 		{
-			color hue_bar;
-			float hue = i / float(150);
-			render->filled_rect(inner_area.x + inner_area.w + 10, inner_area.y + 10 + i, 10, 1, hue_bar.hsv(hue, 1.f, 1.f, this->alpha));
+			this->hue = i / 150;
+			render->filled_rect(inner_area.x + inner_area.w + 10, inner_area.y + 10 + i, 10, 1, color::hsv_to_rgb(this->hue, 1.f, 1.f));
 		}
 
 		// hue bar outline.
@@ -1451,8 +1446,11 @@ void color_picker::draw()
 		// hue bar slider outline.
 		render->outlined_rect(inner_area.x + inner_area.w + 10, inner_area.y + 10 + h, 11, 3, color(10, 10, 10));
 
+		// update alpha opacity.
+		this->alpha = this->value.a / 255.f;
+
 		// alpha bar.
-		render->filled_rect(inner_area.x + 5, inner_area.y + inner_area.h + 15, inner_area.w, 10, alpha_color);
+		render->filled_rect(inner_area.x + 5, inner_area.y + inner_area.h + 15, inner_area.w, 10, this->value);
 
 		// alpha bar outline.
 		render->outlined_rect(inner_area.x + 5, inner_area.y + inner_area.h + 15, inner_area.w, 11, color(35, 35, 35));

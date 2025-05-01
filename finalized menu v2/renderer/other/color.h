@@ -27,9 +27,17 @@ public:
 	{
 		float r, g, b;
 
+		/*
+
 		float	h = hue / 360,
 				s = saturation / 100,
 				v = value / 100;
+
+		*/
+
+		float	h = hue,
+				s = saturation,
+				v = value;
 
 		int		i = std::floor(h * 6);
 		float	f = h * 6 - i,

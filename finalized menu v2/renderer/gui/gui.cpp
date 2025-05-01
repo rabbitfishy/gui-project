@@ -1360,11 +1360,11 @@ void keybind::handle_key_type()
 	}
 }
 
-color_picker::color_picker(group* parent, const char* title, color value, color* ptr, bool inlined)
+color_picker::color_picker(group* parent, const char* title, color default_value, color* value, bool inlined)
 {
 	this->title				= title;
+	this->preview_default	= default_value;
 	this->value				= value;
-	this->ptr				= ptr;
 	this->inlined			= inlined;
 	this->distance			= { 0, this->inlined ? -19 : 0 };
 	this->parent			= parent;
@@ -1381,7 +1381,7 @@ void color_picker::draw()
 		fonts->segoe_ui.text(picker_area.x, picker_area.y - (text_size.h / 2), this->get_title(), color(255, 255, 255));
 
 	// update preview opacity.
-	color preview = this->value;
+	color preview = this->preview_default;
 
 	// get our preview area.
 	rect preview_area = { picker_area.x + picker_area.w + 170, picker_area.y - (text_size.h / 2) + 4, picker_area.w, picker_area.h };
@@ -1444,10 +1444,10 @@ void color_picker::draw()
 		render->outlined_rect(inner_area.x + inner_area.w + 10, inner_area.y + 10 + h, 11, 3, color(10, 10, 10));
 
 		// update alpha opacity.
-		this->alpha = this->value.a / 255.f;
+		this->alpha = preview.a / 255.f;
 
 		// alpha bar.
-		render->filled_rect(inner_area.x + 5, inner_area.y + inner_area.h + 15, inner_area.w, 10, this->value);
+		render->filled_rect(inner_area.x + 5, inner_area.y + inner_area.h + 15, inner_area.w, 10, preview);
 
 		// alpha bar outline.
 		render->outlined_rect(inner_area.x + 5, inner_area.y + inner_area.h + 15, inner_area.w, 11, color(35, 35, 35));
@@ -1539,13 +1539,14 @@ void color_picker::think()
 		if (this->color_drag || this->hue_drag || this->alpha_drag)
 		{
 			// set updated colors.
-			this->value		= color::hsv_to_rgb(this->hue, this->saturation, this->color_value);
-			this->value.a	= (this->alpha * 255.f);
+			this->preview_default	= color::hsv_to_rgb(this->hue, this->saturation, this->color_value);
+			this->preview_default.a	= (this->alpha * 255.f);
 		}
 	}
 
-	// update our color.
-	*this->ptr = this->value;
+	// set preview color as value.
+	if (this->value)
+		*this->value = this->preview_default;
 }
 
 void color_picker::update()

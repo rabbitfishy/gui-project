@@ -405,14 +405,14 @@ namespace gui
 	class color_picker : public element
 	{
 	public:
-		color_picker(group* parent, const char* title, color value, color* ptr, bool inlined = false);
+		color_picker(group* parent, const char* title, color default_value, color* value, bool inlined = false);
 
 		void draw()					override;
 		void think()				override;
 
 	private:
-		color				value;
-		color*				ptr;
+		color				preview_default;
+		color*				value;
 
 		float				hue;
 		float				saturation;

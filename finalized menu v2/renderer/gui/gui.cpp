@@ -295,6 +295,20 @@ void window::draw()
 	render->gradient(window_area.x, window_area.y + 2, window_area.w / 2, 1, color(49, 79, 99), color(89, 50, 90), gradient_direction::horizontal);
 	render->gradient(window_area.x + (window_area.w / 2), window_area.y + 2, window_area.w / 2, 1, color(89, 50, 90), color(114, 108, 49), gradient_direction::horizontal);
 
+	// resize arrow.
+	//rect resize_area = { (window_area.x + window_area.w - 1) - 5, (window_area.y + (window_area.h - 7) + 1), 6, 6 };
+
+	//if (input->in_bound(resize_area))
+	//{
+	//	render->filled_rect(resize_area.x, resize_area.y, resize_area.w, resize_area.h, color(255, 255, 255));
+	//	render->filled_rect(resize_area.x, resize_area.y, resize_area.w - 3, resize_area.h - 3, color(20, 20, 20));
+	//}
+	//else
+	//{
+	//	render->filled_rect(resize_area.x, resize_area.y, resize_area.w, resize_area.h, color(50, 50, 50));
+	//	render->filled_rect(resize_area.x, resize_area.y, resize_area.w - 3, resize_area.h - 3, color(20, 20, 20));
+	//}
+	
 	// border.
 	// 					   ìnner,  middle, outter, border
 	int border_colors[6] = { 60, 35, 35, 35, 60, 0 };
